@@ -8,4 +8,4 @@ MAINTAINER Cristofos/main
 COPY . /usr/src/main
 RUN pwd
 WORKDIR /usr/src/main
-CMD [ "php", "./i.php" ]
+#CMD [ "php", "./i.php" ]

@@ -1,2 +1,2 @@
 <?php
-echo '@'.__FILE__;
+print 'aaaa@' . __FILE__ . PHP_EOL;
