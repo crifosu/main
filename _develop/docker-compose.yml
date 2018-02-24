@@ -4,7 +4,7 @@ services:
   main-web:
       build: ./config/dockerfiles/nginx
       volumes:
-          - ./../application:/var/www/vhosts
+          - ./../application/main:/var/www/vhosts/main
           - ./config/site.conf:/etc/nginx/conf.d/site.conf
           - ./nginx/log:/var/log/nginx
           - ./config/nginx.logrotate:/etc/logrotate.d/nginx
@@ -39,7 +39,7 @@ services:
         - POSTGRES_PASSWORD=main
         - POSTGRES_DB=main
       networks:
-          dvdmax-se-net:
+          main-net:
             ipv4_address: 172.99.120.20
 networks:
    main-net:
