@@ -1,4 +1,0 @@
-FROM php:fpm
-MAINTAINER Cristofos
-
-EXPOSE 9000
