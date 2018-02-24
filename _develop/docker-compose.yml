@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+  main-web:
+      build: ./config/dockerfiles/nginx
+      volumes:
+          - ./../application:/var/www/vhosts
+          - ./config/site.conf:/etc/nginx/conf.d/site.conf
+          - ./nginx/log:/var/log/nginx
+          - ./config/nginx.logrotate:/etc/logrotate.d/nginx
+      links:
+          - main-php
+      container_name: main-web
+      networks:
+        main-net:
+          ipv4_address: 172.99.120.15
+      restart: on-failure:10
+  main-php:
+      build: ./config/dockerfiles/php/dev
+      image: main/dev-php
+      volumes:
+          - ./../application/main:/var/www/vhosts/main
+          - /etc/localtime:/etc/localtime
+      container_name: main-php
+      environment:
+          XDEBUG_CONFIG: remote_host=172.99.120.1
+      working_dir: /var/www/vhosts/main/
+      networks:
+          - main-net
+      restart: on-failure:10
+
+  main-postgres:
+      image: postgres:9.6
+      container_name: main-postgres
+      volumes:
+           - ./postgres/db:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_USER=main
+        - POSTGRES_PASSWORD=main
+        - POSTGRES_DB=main
+      networks:
+          dvdmax-se-net:
+            ipv4_address: 172.99.120.20
+networks:
+   main-net:
+      driver: bridge
+      ipam:
+        driver: default
+        config:
+        - subnet: 172.99.120.0/24
+          gateway: 172.99.120.1
