@@ -18,13 +18,17 @@ class BlogPostAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->with('Content', ['class' => 'col-md-9'])
             ->add('title', 'text')
-            ->add('draft', 'checkbox')
             ->add('body', 'textarea')
+            ->end()
+
+            ->with('Meta data', ['class' => 'col-md-3'])
             ->add('category', 'sonata_type_model', [
                 'class' => 'AppBundle\Entity\Category',
                 'property' => 'name',
             ])
+            ->end()
         ;
     }
 
