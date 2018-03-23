@@ -29,4 +29,13 @@ class CategoryAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('name');
     }
+
+    public function toString($object)
+    {
+        return $object instanceof BlogPost
+            ? $object->getTitle()
+            : 'Kategorie '; // shown in the breadcrumb on the create view
+    }
+
+
 }
